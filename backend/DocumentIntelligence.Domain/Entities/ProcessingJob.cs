@@ -11,7 +11,7 @@ public class ProcessingJob
     public Guid DocumentId { get; set; }
 
     public ProcessingJobStatus Status { get; set; } = ProcessingJobStatus.Pending;
-
+    public string? ErrorMessage { get; private set; }
     public int RetryCount { get; set; }
 
     public string? FailureReason { get; set; }
@@ -21,4 +21,23 @@ public class ProcessingJob
 
     public DateTime? CompletedAtUtc { get; set; }
     public string RequestedBy { get; set; } = string.Empty;
+
+    public void MarkAsProcessing()
+    {
+        Status = ProcessingJobStatus.Processing;
+        StartedAtUtc = DateTime.UtcNow;
+    }
+
+    public void MarkAsSucceeded()
+    {
+        Status = ProcessingJobStatus.Succeeded;
+        CompletedAtUtc = DateTime.UtcNow;
+    }
+
+    public void MarkAsFailed(string errorMessage)
+    {
+        Status = ProcessingJobStatus.Failed;
+        ErrorMessage = errorMessage;
+        CompletedAtUtc = DateTime.UtcNow;
+    }
 }

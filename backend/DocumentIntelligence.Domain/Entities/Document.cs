@@ -25,4 +25,10 @@ public class Document
     public DateTime? ProcessedAtUtc { get; set; }
 
     public List<DocumentChunk> Chunks { get; set; } = new();
+
+    public void MarkAsProcessed()
+    {
+        Status = DocumentStatus.Processed;
+        ProcessedAtUtc = DateTime.UtcNow;
+    }
 }

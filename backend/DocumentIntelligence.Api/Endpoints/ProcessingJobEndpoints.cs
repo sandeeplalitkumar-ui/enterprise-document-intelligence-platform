@@ -10,11 +10,12 @@ public static class ProcessingJobEndpoints
         app.MapPost("/api/documents/{documentId:guid}/processing-jobs", async (
             Guid documentId,
             CreateProcessingJobRequest request,
-            IProcessingJobService processingJobService) =>
+            IProcessingJobService processingJobService,
+            CancellationToken cancellationToken) =>
         {
             try
             {
-                var job = await processingJobService.CreateProcessingJobAsync(documentId, request);
+                var job = await processingJobService.CreateProcessingJobAsync(documentId, request,cancellationToken);
 
                 return Results.Created($"/api/processing-jobs/{job.Id}", job);
             }

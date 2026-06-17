@@ -9,4 +9,6 @@ public interface IDocumentRepository
     Task<IReadOnlyList<Document>> GetByTenantIdAsync(Guid tenantId);
 
     Task<Document?> GetByIdAsync(Guid documentId);
+
+    Task UpdateAsync(Document document);
 }

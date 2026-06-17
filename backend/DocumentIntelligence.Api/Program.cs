@@ -1,6 +1,9 @@
 using DocumentIntelligence.Api.Endpoints;
+using DocumentIntelligence.Api.Workers;
 using DocumentIntelligence.Application.Interfaces;
+using DocumentIntelligence.Application.Queues;
 using DocumentIntelligence.Application.Services;
+using DocumentIntelligence.Infrastructure.Queues;
 using DocumentIntelligence.Infrastructure.Repositories;
 using DocumentIntelligence.Infrastructure.Storage;
 
@@ -16,6 +19,9 @@ builder.Services.AddSingleton<IFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddSingleton<IProcessingJobRepository, InMemoryProcessingJobRepository>();
 builder.Services.AddScoped<IProcessingJobService, ProcessingJobService>();
+builder.Services.AddSingleton<IProcessingJobQueue, InMemoryProcessingJobQueue>();
+
+builder.Services.AddHostedService<ProcessingJobWorker>();
 
 var app = builder.Build();
 

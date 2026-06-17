@@ -6,7 +6,7 @@ public interface IProcessingJobService
 {
     Task<ProcessingJobResponse> CreateProcessingJobAsync(
         Guid documentId,
-        CreateProcessingJobRequest request);
+        CreateProcessingJobRequest request, CancellationToken cancellationToken);
 
     Task<ProcessingJobResponse?> GetProcessingJobByIdAsync(Guid jobId);
 

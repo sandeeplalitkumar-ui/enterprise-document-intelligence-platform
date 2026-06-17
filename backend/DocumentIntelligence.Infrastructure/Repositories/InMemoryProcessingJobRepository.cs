@@ -32,10 +32,9 @@ public class InMemoryProcessingJobRepository : IProcessingJobRepository
         return Task.FromResult(jobs);
     }
 
-    public Task UpdateAsync(ProcessingJob job)
+    public Task UpdateAsync(ProcessingJob processingJob)
     {
-        _jobs[job.Id] = job;
-
+        _jobs[processingJob.Id] = processingJob;
         return Task.CompletedTask;
     }
 }

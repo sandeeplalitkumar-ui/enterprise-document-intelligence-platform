@@ -1,5 +1,6 @@
 using DocumentIntelligence.Application.DTOs;
 using DocumentIntelligence.Application.Interfaces;
+using DocumentIntelligence.Application.Queues;
 using DocumentIntelligence.Domain.Entities;
 using DocumentIntelligence.Domain.Enums;
 
@@ -9,18 +10,21 @@ public class ProcessingJobService : IProcessingJobService
 {
     private readonly IProcessingJobRepository _processingJobRepository;
     private readonly IDocumentRepository _documentRepository;
+    private readonly IProcessingJobQueue _processingJobQueue;
 
     public ProcessingJobService(
         IProcessingJobRepository processingJobRepository,
-        IDocumentRepository documentRepository)
+        IDocumentRepository documentRepository,
+        IProcessingJobQueue processingJobQueue)
     {
         _processingJobRepository = processingJobRepository;
         _documentRepository = documentRepository;
+        _processingJobQueue = processingJobQueue;
     }
 
     public async Task<ProcessingJobResponse> CreateProcessingJobAsync(
         Guid documentId,
-        CreateProcessingJobRequest request)
+        CreateProcessingJobRequest request, CancellationToken cancellationToken)
     {
         var document = await _documentRepository.GetByIdAsync(documentId);
 
@@ -46,6 +50,9 @@ public class ProcessingJobService : IProcessingJobService
         };
 
         var createdJob = await _processingJobRepository.AddAsync(job);
+
+        await _processingJobQueue.EnqueueAsync(job.Id, cancellationToken);
+
 
         return MapToResponse(createdJob);
     }

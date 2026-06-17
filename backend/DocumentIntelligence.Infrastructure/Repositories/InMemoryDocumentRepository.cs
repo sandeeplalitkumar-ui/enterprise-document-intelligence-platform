@@ -31,4 +31,10 @@ public class InMemoryDocumentRepository : IDocumentRepository
 
         return Task.FromResult(document);
     }
+
+    public Task UpdateAsync(Document document)
+    {
+        _documents[document.Id] = document;
+        return Task.CompletedTask;
+    }
 }
