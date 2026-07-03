@@ -609,6 +609,8 @@ GET /api/processing-jobs/{jobId}
 
 ## Roadmap
 
+## Roadmap
+
 ### Completed
 
 - [x] Solution setup
@@ -619,36 +621,42 @@ GET /api/processing-jobs/{jobId}
 - [x] Document metadata API
 - [x] File upload API
 - [x] Processing job API
+- [x] In-memory processing queue
+- [x] Background worker
+- [x] Processing job status transitions
+- [x] Simulated document processing
+- [x] Document text extraction domain entity
+- [x] In-memory text extraction repository
+- [x] Background worker creates text extraction output
+- [x] GET endpoint for document text extraction
 
 ---
 
 ### Next
 
-- [ ] In-memory processing queue
-- [ ] Background worker
-- [ ] Processing job status transitions
-- [ ] Simulated document processing
+- [ ] Text extraction service abstraction
+- [ ] Placeholder text extraction service
+- [ ] Refactor background worker to use text extraction service
+- [ ] Add processing logs or processing history
+- [ ] Improve error handling for failed processing jobs
 
 ---
 
 ### Planned
 
-- [ ] Retry handling
-- [ ] Dead-letter queue concept
-- [ ] Idempotency handling
-- [ ] Text extraction
+- [ ] Real PDF text extraction
 - [ ] Document chunking
+- [ ] Chunk metadata storage
 - [ ] Embedding generation
-- [ ] Vector store integration
-- [ ] RAG query API
-- [ ] AI-powered answer generation
-- [ ] Source citations
-- [ ] SQL database persistence
-- [ ] Cloud object storage integration
+- [ ] Vector search integration
+- [ ] AI-powered Q&A over uploaded documents
+- [ ] Citation support for answers
+- [ ] Persistent database storage
+- [ ] Replace in-memory queue with durable queue
 - [ ] Authentication and authorization
-- [ ] Tenant-level access control
-- [ ] Audit logging
-- [ ] Observability and metrics
+- [ ] Tenant-level isolation and access control
+- [ ] Docker support
+- [ ] Cloud deployment
 
 ---
 
