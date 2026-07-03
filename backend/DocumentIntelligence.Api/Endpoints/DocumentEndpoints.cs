@@ -1,4 +1,5 @@
 using DocumentIntelligence.Application.DTOs;
+using DocumentIntelligence.Application.Interfaces;
 using DocumentIntelligence.Application.Services;
 using DocumentIntelligence.Domain.Enums;
 
@@ -8,6 +9,24 @@ public static class DocumentEndpoints
 {
     public static void MapDocumentEndpoints(this WebApplication app)
     {
+
+        app.MapGet("/api/documents/{documentId:guid}/text-extraction",
+        async (
+            Guid documentId,
+            IDocumentTextExtractionRepository textExtractionRepository) =>
+        {
+            var extraction = await textExtractionRepository.GetByDocumentIdAsync(documentId);
+
+            if (extraction is null)
+            {
+                return Results.NotFound();
+            }
+
+            return Results.Ok(extraction);
+        })
+        .WithTags("Documents")
+        .WithName("GetDocumentTextExtraction");
+
         app.MapPost("/api/tenants/{tenantId:guid}/documents", async (
             Guid tenantId,
             CreateDocumentRequest request,

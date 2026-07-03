@@ -1,5 +1,6 @@
-using DocumentIntelligence.Application.Queues;
 using DocumentIntelligence.Application.Interfaces;
+using DocumentIntelligence.Application.Queues;
+using DocumentIntelligence.Domain.Entities;
 using DocumentIntelligence.Domain.Enums;
 
 namespace DocumentIntelligence.Api.Workers;
@@ -52,6 +53,8 @@ public class ProcessingJobWorker : BackgroundService
 
         var documentRepository =
             scope.ServiceProvider.GetRequiredService<IDocumentRepository>();
+        var textExtractionRepository =
+            scope.ServiceProvider.GetRequiredService<IDocumentTextExtractionRepository>();  
 
         var job = await processingJobRepository.GetByIdAsync(processingJobId);
 
@@ -82,6 +85,16 @@ public class ProcessingJobWorker : BackgroundService
 
         // Simulate document processing for now.
         await Task.Delay(TimeSpan.FromSeconds(3), cancellationToken);
+
+        var extractedText = new DocumentTextExtraction
+        {
+            TenantId = document.TenantId,
+            DocumentId = document.Id,
+            ExtractedText = $"Extracted text placeholder for document: {document.FileName}",
+            CreatedAtUtc = DateTime.UtcNow
+        };
+
+        await textExtractionRepository.AddAsync(extractedText);
 
         document.MarkAsProcessed();
         await documentRepository.UpdateAsync(document);

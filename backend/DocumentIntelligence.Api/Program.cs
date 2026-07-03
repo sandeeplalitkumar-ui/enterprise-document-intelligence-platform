@@ -20,6 +20,7 @@ builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddSingleton<IProcessingJobRepository, InMemoryProcessingJobRepository>();
 builder.Services.AddScoped<IProcessingJobService, ProcessingJobService>();
 builder.Services.AddSingleton<IProcessingJobQueue, InMemoryProcessingJobQueue>();
+builder.Services.AddSingleton<IDocumentTextExtractionRepository, InMemoryDocumentTextExtractionRepository>();
 
 builder.Services.AddHostedService<ProcessingJobWorker>();
 
