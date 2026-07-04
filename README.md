@@ -629,6 +629,8 @@ GET /api/processing-jobs/{jobId}
 - [x] In-memory text extraction repository
 - [x] Background worker creates text extraction output
 - [x] GET endpoint for document text extraction
+- [x] Dockerized API using self-contained .NET publish
+- [x] Docker support documentation
 
 ---
 
@@ -655,7 +657,6 @@ GET /api/processing-jobs/{jobId}
 - [ ] Replace in-memory queue with durable queue
 - [ ] Authentication and authorization
 - [ ] Tenant-level isolation and access control
-- [ ] Docker support
 - [ ] Cloud deployment
 
 ---

@@ -1,0 +1,12 @@
+FROM debian:bookworm-slim
+
+WORKDIR /app
+
+COPY ./publish .
+
+EXPOSE 8080
+
+ENV ASPNETCORE_URLS=http://+:8080
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+
+ENTRYPOINT ["./DocumentIntelligence.Api"]
