@@ -6,6 +6,7 @@ using DocumentIntelligence.Application.Services;
 using DocumentIntelligence.Infrastructure.Queues;
 using DocumentIntelligence.Infrastructure.Repositories;
 using DocumentIntelligence.Infrastructure.Services;
+using DocumentIntelligence.Infrastructure.Services.TextExtraction;
 using DocumentIntelligence.Infrastructure.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +23,19 @@ builder.Services.AddSingleton<IProcessingJobRepository, InMemoryProcessingJobRep
 builder.Services.AddScoped<IProcessingJobService, ProcessingJobService>();
 builder.Services.AddSingleton<IProcessingJobQueue, InMemoryProcessingJobQueue>();
 builder.Services.AddSingleton<IDocumentTextExtractionRepository, InMemoryDocumentTextExtractionRepository>();
-builder.Services.AddSingleton<ITextExtractionService, PlaceholderTextExtractionService>();
+builder.Services.AddHttpClient<ITextExtractionService, HttpPythonTextExtractionService>((serviceProvider, client) =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
+    var baseUrl = configuration["PythonTextExtractionService:BaseUrl"];
+
+    if (string.IsNullOrWhiteSpace(baseUrl))
+    {
+        throw new InvalidOperationException("Python text extraction service BaseUrl is not configured.");
+    }
+
+    client.BaseAddress = new Uri(baseUrl);
+});
 builder.Services.AddHostedService<ProcessingJobWorker>();
 
 var app = builder.Build();

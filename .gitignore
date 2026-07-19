@@ -8,3 +8,4 @@ storage/documents/
 **/storage/documents/
 appsettings.Development.json
 .DS_Store
+/python-text-extraction/__pycache__
