@@ -54,7 +54,9 @@ public class ProcessingJobWorker : BackgroundService
         var documentRepository =
             scope.ServiceProvider.GetRequiredService<IDocumentRepository>();
         var textExtractionRepository =
-            scope.ServiceProvider.GetRequiredService<IDocumentTextExtractionRepository>();  
+            scope.ServiceProvider.GetRequiredService<IDocumentTextExtractionRepository>();
+        var textExtractionService =
+            scope.ServiceProvider.GetRequiredService<ITextExtractionService>();
 
         var job = await processingJobRepository.GetByIdAsync(processingJobId);
 
@@ -86,11 +88,14 @@ public class ProcessingJobWorker : BackgroundService
         // Simulate document processing for now.
         await Task.Delay(TimeSpan.FromSeconds(3), cancellationToken);
 
+        var extractedTextValue =
+        await textExtractionService.ExtractTextAsync(document, cancellationToken);
+
         var extractedText = new DocumentTextExtraction
         {
             TenantId = document.TenantId,
             DocumentId = document.Id,
-            ExtractedText = $"Extracted text placeholder for document: {document.FileName}",
+            ExtractedText = extractedTextValue,
             CreatedAtUtc = DateTime.UtcNow
         };
 

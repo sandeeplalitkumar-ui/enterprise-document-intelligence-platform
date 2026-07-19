@@ -5,6 +5,7 @@ using DocumentIntelligence.Application.Queues;
 using DocumentIntelligence.Application.Services;
 using DocumentIntelligence.Infrastructure.Queues;
 using DocumentIntelligence.Infrastructure.Repositories;
+using DocumentIntelligence.Infrastructure.Services;
 using DocumentIntelligence.Infrastructure.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ builder.Services.AddSingleton<IProcessingJobRepository, InMemoryProcessingJobRep
 builder.Services.AddScoped<IProcessingJobService, ProcessingJobService>();
 builder.Services.AddSingleton<IProcessingJobQueue, InMemoryProcessingJobQueue>();
 builder.Services.AddSingleton<IDocumentTextExtractionRepository, InMemoryDocumentTextExtractionRepository>();
+builder.Services.AddSingleton<ITextExtractionService, PlaceholderTextExtractionService>();
 
 builder.Services.AddHostedService<ProcessingJobWorker>();
 
