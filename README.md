@@ -631,16 +631,17 @@ GET /api/processing-jobs/{jobId}
 - [x] GET endpoint for document text extraction
 - [x] Dockerized API using self-contained .NET publish
 - [x] Docker support documentation
+- [x] Python text extraction service
+- [x] .NET to Python text extraction integration
+- [x] HttpClient-based text extraction service
 
 ---
 
 ### Next
 
-- [ ] Text extraction service abstraction
-- [ ] Placeholder text extraction service
-- [ ] Refactor background worker to use text extraction service
-- [ ] Add processing logs or processing history
-- [ ] Improve error handling for failed processing jobs
+- [ ] Dockerize Python text extraction service
+- [ ] Add Docker Compose for .NET API + Python service
+- [ ] Add retry/error handling for Python service failure
 
 ---
 
